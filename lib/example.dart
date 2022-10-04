@@ -17,6 +17,8 @@ class ExamplePage extends StatefulWidget {
 }
 
 class _ExamplePageState extends State<ExamplePage> {
+  List<ExamContainer> exams = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,8 +49,8 @@ class _ExamplePageState extends State<ExamplePage> {
             height: MediaQuery.of(context).size.height * 0.4,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 5,
-              itemBuilder: (context, index) => ExamContainer(),
+              itemCount: exams.length,
+              itemBuilder: (context, index) => exams[index],
             ),
           ),
           SizedBox(height: 15),
@@ -56,7 +58,20 @@ class _ExamplePageState extends State<ExamplePage> {
             alignment: Alignment.center,
             padding: EdgeInsets.all(15),
             child: TextButton(
-              onPressed: () {},
+              onPressed: () async {
+                final result = await showDialog(
+                  context: context,
+                  builder: (context) => NewExamDialog(),
+                );
+                setState(() {
+                  exams.add(ExamContainer(
+                    date: result['date'],
+                    course: result['course'],
+                    venue: result['venue'],
+                    topicsCovered: result['topics'],
+                  ));
+                });
+              },
               style: TextButton.styleFrom(
                 backgroundColor: darkBlueColor,
                 alignment: Alignment.center,
@@ -121,6 +136,107 @@ class _ExamplePageState extends State<ExamplePage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class NewExamDialog extends StatefulWidget {
+  const NewExamDialog({Key? key}) : super(key: key);
+
+  @override
+  State<NewExamDialog> createState() => _NewExamDialogState();
+}
+
+class _NewExamDialogState extends State<NewExamDialog> {
+  String? course;
+  String? date;
+  String? venue;
+  String? topics;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: pinkColor,
+      title: Text(
+        'Create New Exam',
+        style: TextStyle(
+          color: lightColor,
+          fontSize: 16.0,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      content: Form(
+        onChanged: () => Form.of(primaryFocus!.context!)!.save(),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Course',
+                icon: Icon(Icons.class_, color: lightColor),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: lightColor),
+                ),
+                floatingLabelStyle: TextStyle(color: lightColor),
+              ),
+              cursorColor: lightColor,
+              onSaved: (value) => course = value,
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Date',
+                icon: Icon(Icons.class_, color: lightColor),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: lightColor),
+                ),
+                floatingLabelStyle: TextStyle(color: lightColor),
+              ),
+              cursorColor: lightColor,
+              onSaved: (value) => date = value,
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Venue',
+                icon: Icon(Icons.class_, color: lightColor),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: lightColor),
+                ),
+                floatingLabelStyle: TextStyle(color: lightColor),
+              ),
+              cursorColor: lightColor,
+              onSaved: (value) => venue = value,
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Topics',
+                icon: Icon(Icons.class_, color: lightColor),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: lightColor),
+                ),
+                floatingLabelStyle: TextStyle(color: lightColor),
+              ),
+              cursorColor: lightColor,
+              onSaved: (value) => topics = value,
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        ElevatedButton(
+          child: Text("Submit", style: TextStyle(color: lightColor)),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(darkBlueColor),
+          ),
+          onPressed: () {
+            Navigator.pop(context, {
+              'course': course,
+              'date': date,
+              'venue': venue,
+              'topics': topics
+            });
+          },
+        )
+      ],
     );
   }
 }
@@ -203,8 +319,17 @@ class ClassContainer extends StatelessWidget {
 }
 
 class ExamContainer extends StatelessWidget {
+  final String date;
+  final String course;
+  final String venue;
+  final String topicsCovered;
+
   const ExamContainer({
     Key? key,
+    required this.date,
+    required this.course,
+    required this.venue,
+    required this.topicsCovered,
   }) : super(key: key);
 
   @override
@@ -235,7 +360,7 @@ class ExamContainer extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: 5),
                     child: Text(
-                      "20th September",
+                      date,
                       style: TextStyle(
                         color: lightColor,
                         fontSize: 24.0,
@@ -243,11 +368,11 @@ class ExamContainer extends StatelessWidget {
                       ),
                     ),
                   ),
-                  TextBox(text: "Exam: Calculus III"),
-                  TextBox(text: "Venue: Elliot Hall"),
+                  TextBox(text: "Exam: ${course}"),
+                  TextBox(text: "Venue: ${venue}"),
                   TextBox(text: "Topics Covered:"),
                   SizedBox(height: 5),
-                  ExamBox(topic: "Geometry of Space"),
+                  ExamBox(topic: "${topicsCovered}"),
                   SizedBox(height: 20),
                   Container(
                     alignment: Alignment.center,
