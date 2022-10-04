@@ -45,10 +45,28 @@ class _ExamplePageState extends State<ExamplePage> {
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.4,
-            child: ListView.builder(
+            child: ListView(
               scrollDirection: Axis.horizontal,
-              itemCount: 5,
-              itemBuilder: (context, index) => ExamContainer(),
+              children: [
+                ExamContainer(
+                  course: 'MA261',
+                  venue: 'Elliott Hall',
+                  topicsCovered: 'Geometry of Space',
+                  date: '20th September',
+                ),
+                ExamContainer(
+                  course: 'CS182',
+                  venue: 'Elliott Hall',
+                  topicsCovered: 'Proofs, Sets, Relations',
+                  date: '27th September',
+                ),
+                ExamContainer(
+                  course: 'CS240',
+                  venue: 'Elliott Hall',
+                  topicsCovered: 'Operators, Recursion',
+                  date: '25th September',
+                ),
+              ],
             ),
           ),
         ],
@@ -58,8 +76,17 @@ class _ExamplePageState extends State<ExamplePage> {
 }
 
 class ExamContainer extends StatelessWidget {
+  final String date;
+  final String course;
+  final String venue;
+  final String topicsCovered;
+
   const ExamContainer({
     Key? key,
+    required this.course,
+    required this.venue,
+    required this.topicsCovered,
+    required this.date,
   }) : super(key: key);
 
   @override
@@ -90,7 +117,7 @@ class ExamContainer extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: 5),
                     child: Text(
-                      "20th September",
+                      date,
                       style: TextStyle(
                         color: lightColor,
                         fontSize: 24.0,
@@ -98,11 +125,11 @@ class ExamContainer extends StatelessWidget {
                       ),
                     ),
                   ),
-                  TextBox(text: "Exam: Calculus III"),
-                  TextBox(text: "Venue: Elliot Hall"),
+                  TextBox(text: "Exam: ${course}"),
+                  TextBox(text: "Venue: ${venue}"),
                   TextBox(text: "Topics Covered:"),
                   SizedBox(height: 5),
-                  ExamBox(topic: "Geometry of Space"),
+                  ExamBox(topic: topicsCovered),
                   SizedBox(height: 20),
                   Container(
                     alignment: Alignment.center,
