@@ -45,28 +45,52 @@ class _ExamplePageState extends State<ExamplePage> {
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.4,
-            child: ListView(
+            child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              children: [
-                ExamContainer(
-                  course: 'MA261',
-                  venue: 'Elliott Hall',
-                  topicsCovered: 'Geometry of Space',
-                  date: '20th September',
+              itemCount: 5,
+              itemBuilder: (context, index) => ExamContainer(),
+            ),
+          ),
+          SizedBox(height: 15),
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(15),
+            child: TextButton(
+              onPressed: () {},
+              style: TextButton.styleFrom(
+                backgroundColor: darkBlueColor,
+                alignment: Alignment.center,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
                 ),
-                ExamContainer(
-                  course: 'CS182',
-                  venue: 'Elliott Hall',
-                  topicsCovered: 'Proofs, Sets, Relations',
-                  date: '27th September',
+              ),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                height: 60,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      width: 180,
+                      child: Text(
+                        "Create a New Exam Event",
+                        style: TextStyle(
+                          color: lightColor,
+                          fontSize: 20,
+                          letterSpacing: 1.5,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: Icon(
+                        Icons.add,
+                        color: lightColor,
+                        size: 40,
+                      ),
+                    )
+                  ],
                 ),
-                ExamContainer(
-                  course: 'CS240',
-                  venue: 'Elliott Hall',
-                  topicsCovered: 'Operators, Recursion',
-                  date: '25th September',
-                ),
-              ],
+              ),
             ),
           ),
         ],
@@ -76,17 +100,8 @@ class _ExamplePageState extends State<ExamplePage> {
 }
 
 class ExamContainer extends StatelessWidget {
-  final String date;
-  final String course;
-  final String venue;
-  final String topicsCovered;
-
   const ExamContainer({
     Key? key,
-    required this.course,
-    required this.venue,
-    required this.topicsCovered,
-    required this.date,
   }) : super(key: key);
 
   @override
@@ -117,7 +132,7 @@ class ExamContainer extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: 5),
                     child: Text(
-                      date,
+                      "20th September",
                       style: TextStyle(
                         color: lightColor,
                         fontSize: 24.0,
@@ -125,11 +140,11 @@ class ExamContainer extends StatelessWidget {
                       ),
                     ),
                   ),
-                  TextBox(text: "Exam: ${course}"),
-                  TextBox(text: "Venue: ${venue}"),
+                  TextBox(text: "Exam: Calculus III"),
+                  TextBox(text: "Venue: Elliot Hall"),
                   TextBox(text: "Topics Covered:"),
                   SizedBox(height: 5),
-                  ExamBox(topic: topicsCovered),
+                  ExamBox(topic: "Geometry of Space"),
                   SizedBox(height: 20),
                   Container(
                     alignment: Alignment.center,
