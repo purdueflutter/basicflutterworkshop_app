@@ -19,7 +19,6 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final classes = BlocProvider.of<ClassBloc>(context).state.classes;
     return ListView(
       children: [
         Padding(
@@ -110,14 +109,18 @@ class _HomeViewState extends State<HomeView> {
         ),
         ConstrainedBox(
           constraints: BoxConstraints(minHeight: 10, maxHeight: 500),
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: classes.length,
-            itemBuilder: (context, index) => ClassContainer(
-              date: classes[index].date,
-              subject: classes[index].subject,
-            ),
+          child: BlocBuilder<ClassBloc, ClassState>(
+            builder: (context, state) {
+              return ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: state.classes.length,
+                itemBuilder: (context, index) => ClassContainer(
+                  date: state.classes[index].date,
+                  subject: state.classes[index].subject,
+                ),
+              );
+            },
           ),
         ),
       ],

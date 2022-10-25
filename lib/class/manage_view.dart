@@ -11,31 +11,35 @@ class ManageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final classes = BlocProvider.of<ClassBloc>(context).state.classes;
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Text(
-            "Manage Classes",
-            style: TextStyle(
-              fontSize: 28,
-              color: darkBlueColor,
-              fontWeight: FontWeight.bold,
+    return BlocBuilder<ClassBloc, ClassState>(
+      builder: (context, state) {
+        return Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Text(
+                "Manage Classes",
+                style: TextStyle(
+                  fontSize: 28,
+                  color: darkBlueColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-          ),
-        ),
-        NewClassButton(),
-        Flexible(
-          child: ListView.builder(
-            itemCount: classes.length,
-            itemBuilder: (context, index) {
-              return ClassContainer(
-                  subject: classes[index].subject, date: classes[index].date);
-            },
-          ),
-        ),
-      ],
+            NewClassButton(),
+            Flexible(
+              child: ListView.builder(
+                itemCount: state.classes.length,
+                itemBuilder: (context, index) {
+                  return ClassContainer(
+                      subject: state.classes[index].subject,
+                      date: state.classes[index].date);
+                },
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

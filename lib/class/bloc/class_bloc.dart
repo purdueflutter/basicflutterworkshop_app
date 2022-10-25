@@ -8,8 +8,7 @@ part 'class_state.dart';
 class ClassBloc extends Bloc<ClassEvent, ClassState> {
   ClassBloc() : super(ClassState(const [])) {
     on<ClassAddEvent>((event, emit) {
-      state.classes.add(event.$class);
-      emit(ClassState(state.classes));
+      emit(state.copyWith(classes: [...state.classes, event.$class]));
     });
   }
 }
