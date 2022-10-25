@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/class/bloc/class_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'class/class_container.dart';
 import 'exam/exam_container.dart';
@@ -17,6 +19,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final classes = BlocProvider.of<ClassBloc>(context).state.classes;
     return ListView(
       children: [
         Padding(
@@ -105,19 +108,17 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
         ),
-        ClassContainer(
-          date: "10:30 AM",
-          subject: "CS180 - O.O.P.",
-        ),
-        SizedBox(height: 5.0),
-        ClassContainer(
-          date: "1:30 PM",
-          subject: "CS250 - Microeconomics",
-        ),
-        SizedBox(height: 5.0),
-        ClassContainer(
-          date: "3:30 PM",
-          subject: "MA251 - Multivariate Calculus",
+        ConstrainedBox(
+          constraints: BoxConstraints(minHeight: 10, maxHeight: 500),
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: classes.length,
+            itemBuilder: (context, index) => ClassContainer(
+              date: classes[index].date,
+              subject: classes[index].subject,
+            ),
+          ),
         ),
       ],
     );
