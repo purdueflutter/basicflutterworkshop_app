@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/class/manage_view.dart';
+import 'package:flutter_application_1/home_view.dart';
 
 import 'class/class_container.dart';
 import 'exam/exam_container.dart';
@@ -13,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<ExamContainer> exams = [];
+  int selectedTab = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -28,109 +30,31 @@ class _HomePageState extends State<HomePage> {
         ),
         backgroundColor: darkBlueColor,
       ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              "Exams Today",
-              style: TextStyle(
-                fontSize: 28,
-                color: darkBlueColor,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.4,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: exams.length,
-              itemBuilder: (context, index) => exams[index],
-            ),
-          ),
-          SizedBox(height: 15),
-          Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(15),
-            child: TextButton(
-              onPressed: () async {
-                final result = await showDialog(
-                  context: context,
-                  builder: (context) => NewExamDialog(),
-                );
-                setState(() {
-                  exams.add(ExamContainer(
-                    date: result['date'],
-                    course: result['course'],
-                    venue: result['venue'],
-                    topicsCovered: result['topics'],
-                  ));
-                });
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: darkBlueColor,
-                alignment: Alignment.center,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                height: 60,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      width: 180,
-                      child: Text(
-                        "Create a New Exam Event",
-                        style: TextStyle(
-                          color: lightColor,
-                          fontSize: 20,
-                          letterSpacing: 1.5,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: Icon(
-                        Icons.add,
-                        color: lightColor,
-                        size: 40,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              "Classes Today",
-              style: TextStyle(
-                fontSize: 28,
-                color: darkBlueColor,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          ClassContainer(
-            date: "10:30 AM",
-            subject: "CS180 - Obj Oriented Programming",
-          ),
-          SizedBox(height: 5.0),
-          ClassContainer(
-            date: "1:30 PM",
-            subject: "CS250 - Microeconomics",
-          ),
-          SizedBox(height: 5.0),
-          ClassContainer(
-            date: "3:30 PM",
-            subject: "MA251 - Multivariate Calculus",
-          ),
+      body: IndexedStack(
+        index: selectedTab,
+        children: const [
+          HomeView(),
+          ManageView(),
         ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              icon: Icon(Icons.home),
+              iconSize: 32,
+              color: darkBlueColor,
+              onPressed: () => setState(() => selectedTab = 0),
+            ),
+            IconButton(
+              icon: Icon(Icons.settings),
+              iconSize: 32,
+              color: darkBlueColor,
+              onPressed: () => setState(() => selectedTab = 1),
+            ),
+          ],
+        ),
       ),
     );
   }
