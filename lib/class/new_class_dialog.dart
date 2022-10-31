@@ -6,19 +6,18 @@ class NewClassDialog extends StatefulWidget {
   const NewClassDialog({Key? key}) : super(key: key);
 
   @override
-  State<NewClassDialog> createState() => _NewExamDialogState();
+  State<NewClassDialog> createState() => _NewClassDialogState();
 }
 
-class _NewExamDialogState extends State<NewClassDialog> {
+class _NewClassDialogState extends State<NewClassDialog> {
   String? subject;
-  String? date;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: pinkColor,
       title: Text(
-        'Create New Exam',
+        'Create New Class',
         style: TextStyle(
           color: lightColor,
           fontSize: 16.0,
@@ -42,18 +41,6 @@ class _NewExamDialogState extends State<NewClassDialog> {
               cursorColor: lightColor,
               onSaved: (value) => subject = value,
             ),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Date',
-                icon: Icon(Icons.class_, color: lightColor),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: lightColor),
-                ),
-                floatingLabelStyle: TextStyle(color: lightColor),
-              ),
-              cursorColor: lightColor,
-              onSaved: (value) => date = value,
-            ),
           ],
         ),
       ),
@@ -63,10 +50,7 @@ class _NewExamDialogState extends State<NewClassDialog> {
             backgroundColor: MaterialStateProperty.all<Color>(darkBlueColor),
           ),
           onPressed: () {
-            Navigator.pop(context, {
-              'subject': subject,
-              'date': date,
-            });
+            Navigator.pop(context, {'subject': subject});
           },
           child: Text("Submit", style: TextStyle(color: lightColor)),
         )

@@ -31,9 +31,7 @@ class ManageView extends StatelessWidget {
               child: ListView.builder(
                 itemCount: state.classes.length,
                 itemBuilder: (context, index) {
-                  return ClassContainer(
-                      subject: state.classes[index].subject,
-                      date: state.classes[index].date);
+                  return ClassContainer($class: state.classes[index]);
                 },
               ),
             ),

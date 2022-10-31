@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../theme.dart';
+import 'model/class.dart';
 
 class ClassContainer extends StatelessWidget {
-  final String subject;
-  final String date;
+  final Class $class;
 
   const ClassContainer({
     Key? key,
-    required this.subject,
-    required this.date,
+    required this.$class,
   }) : super(key: key);
 
   @override
@@ -47,21 +46,13 @@ class ClassContainer extends StatelessWidget {
                       Radius.circular(20),
                     ),
                   ),
-                  child: Text(
-                    date,
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ),
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.all(10),
                     alignment: Alignment.center,
                     child: Text(
-                      subject,
+                      $class.subject,
                       style: TextStyle(
                         fontSize: 18,
                         color: darkBlueColor,

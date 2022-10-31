@@ -115,10 +115,8 @@ class _HomeViewState extends State<HomeView> {
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemCount: state.classes.length,
-                itemBuilder: (context, index) => ClassContainer(
-                  date: state.classes[index].date,
-                  subject: state.classes[index].subject,
-                ),
+                itemBuilder: (context, index) =>
+                    ClassContainer($class: state.classes[index]),
               );
             },
           ),

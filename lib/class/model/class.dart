@@ -1,11 +1,5 @@
-import 'package:equatable/equatable.dart';
-
-class Class extends Equatable {
+class Class {
   final String subject;
-  final String date;
 
-  const Class(this.subject, this.date);
-
-  @override
-  List<Object?> get props => [subject, date];
+  const Class(this.subject);
 }
