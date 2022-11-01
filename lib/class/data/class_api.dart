@@ -4,4 +4,5 @@ abstract class ClassApi {
   Future<void> createClass(Class $class);
   Future<Class> readClass(String id);
   Future<void> deleteClass(Class $class);
+  Future<List<Class>> readClasses();
 }

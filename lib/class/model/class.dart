@@ -14,9 +14,6 @@ class Class {
   }
 
   String toJson() {
-    return json.encode({
-      'id': id,
-      'subject': subject,
-    });
+    return json.encode({'id': id, 'subject': subject});
   }
 }

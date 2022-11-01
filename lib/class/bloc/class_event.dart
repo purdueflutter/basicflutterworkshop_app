@@ -13,3 +13,7 @@ class ClassAddEvent extends ClassEvent {
   @override
   List<Object?> get props => [$class];
 }
+
+class ClassesGetEvent extends ClassEvent {
+  ClassesGetEvent();
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/class/data/localstorage_class_api.dart';
 import 'package:flutter_application_1/home_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: BlocProvider(
-        create: (context) => ClassBloc(),
+        create: (context) =>
+            ClassBloc(classApi: LocalStorageClassApi())..add(ClassesGetEvent()),
         child: HomePage(),
       ),
       debugShowCheckedModeBanner: false,

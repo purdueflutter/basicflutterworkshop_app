@@ -20,4 +20,15 @@ class LocalStorageClassApi extends ClassApi {
     final prefs = await SharedPreferences.getInstance();
     return Class.fromJson(prefs.getString(id)!);
   }
+
+  @override
+  Future<List<Class>> readClasses() async {
+    final prefs = await SharedPreferences.getInstance();
+    var keys = prefs.getKeys();
+    List<Class> classes = [];
+    for (var key in keys) {
+      classes.add(Class.fromJson(prefs.getString(key)!));
+    }
+    return classes;
+  }
 }

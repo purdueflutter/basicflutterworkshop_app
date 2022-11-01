@@ -22,6 +22,7 @@ class NewClassButton extends StatelessWidget {
             builder: (context) => NewClassDialog(),
           );
           bloc.add(ClassAddEvent(Class(result['subject'])));
+          bloc.add(ClassesGetEvent());
         },
         style: TextButton.styleFrom(
           backgroundColor: darkBlueColor,
