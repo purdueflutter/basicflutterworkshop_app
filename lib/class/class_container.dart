@@ -46,6 +46,14 @@ class ClassContainer extends StatelessWidget {
                       Radius.circular(20),
                     ),
                   ),
+                  child: Text(
+                    $class.semester,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
                 Expanded(
                   child: Container(

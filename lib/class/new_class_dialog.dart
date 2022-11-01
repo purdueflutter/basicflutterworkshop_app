@@ -11,6 +11,7 @@ class NewClassDialog extends StatefulWidget {
 
 class _NewClassDialogState extends State<NewClassDialog> {
   String? subject;
+  String? semester;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,18 @@ class _NewClassDialogState extends State<NewClassDialog> {
               cursorColor: lightColor,
               onSaved: (value) => subject = value,
             ),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Semester',
+                icon: Icon(Icons.calendar_month, color: lightColor),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: lightColor),
+                ),
+                floatingLabelStyle: TextStyle(color: lightColor),
+              ),
+              cursorColor: lightColor,
+              onSaved: (value) => semester = value,
+            ),
           ],
         ),
       ),
@@ -50,7 +63,7 @@ class _NewClassDialogState extends State<NewClassDialog> {
             backgroundColor: MaterialStateProperty.all<Color>(darkBlueColor),
           ),
           onPressed: () {
-            Navigator.pop(context, {'subject': subject});
+            Navigator.pop(context, {'subject': subject, 'semester': semester});
           },
           child: Text("Submit", style: TextStyle(color: lightColor)),
         )
